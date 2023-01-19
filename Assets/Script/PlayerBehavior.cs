@@ -5,6 +5,7 @@ using TMPro;
 
 public class PlayerBehavior : MonoBehaviour
 {
+    AudioSource playerEffects;
     public AudioSource musicSource; 
 
     public AudioClip gunFire;
@@ -14,6 +15,8 @@ public class PlayerBehavior : MonoBehaviour
     public AudioClip winSound;
 
     public AudioClip loseSound;
+    public AudioClip intro;
+    public AudioClip song;
 
     public TextMeshProUGUI start;
     public TextMeshProUGUI timer;
@@ -24,6 +27,7 @@ public class PlayerBehavior : MonoBehaviour
     float introTime = 2;
     int winOrLos = -1;
     bool fireOpen;
+    bool timerDone = true;
     private SpriteRenderer drawR;
 
     Animator anim;
@@ -32,10 +36,12 @@ public class PlayerBehavior : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         drawR = gameObject.GetComponent<SpriteRenderer>();
+        playerEffects = GetComponent<AudioSource>();
         timer.enabled = false;
         winL.enabled = false;
         anim.enabled= false;
         fireOpen = false;
+        musicSource.enabled = false;
 
     }
 
@@ -47,13 +53,19 @@ public class PlayerBehavior : MonoBehaviour
         if(introTime>=0)
         {
             introTime -= Time.deltaTime; 
+            playerEffects.PlayOneShot(intro);
         }
-        else 
+        else if(introTime <=0)
         {
             start.enabled = false;
             timer.enabled = true;
             anim.enabled = true;
             fireOpen = true;
+            if(timerDone==true)
+            {
+                musicSource.enabled = true;
+                timerDone = false;
+            }
             
         }
         if(fireOpen==true)
@@ -67,6 +79,8 @@ public class PlayerBehavior : MonoBehaviour
                 }
                 else if(totalTime <=0)
                 {
+                    //playerEffects.volume = 1;
+                    playerEffects.PlayOneShot(gunFireL);
                     anim.SetInteger("Win", -1);
                     winOrLos = 0;
                     WinLM(winOrLos);
@@ -75,12 +89,16 @@ public class PlayerBehavior : MonoBehaviour
         //Loss Condition here as an else statement
             if(drawR.sprite.name == "Western_7" && Input.GetKeyDown(KeyCode.W))
             {
+                playerEffects.volume = 1;
+                playerEffects.PlayOneShot(gunFire);
                 anim.SetInteger("Win", 1);
                 winOrLos = 1;
                 WinLM(winOrLos);
             }
             else if(drawR.sprite.name == "Western_6" && Input.GetKeyDown(KeyCode.W))
             {
+                playerEffects.volume = 1;
+                playerEffects.PlayOneShot(gunFireL);
                 anim.SetInteger("Win", -1);
                 winOrLos = 0;
                 WinLM(winOrLos);
@@ -95,10 +113,15 @@ public class PlayerBehavior : MonoBehaviour
     {
         if( winOrLos==1)
         {
+            musicSource.enabled = false;
+            playerEffects.PlayOneShot(winSound);
             winL.enabled= true;
+
         }
         if(winOrLos==0)
         {
+            musicSource.enabled = false;
+            playerEffects.PlayOneShot(loseSound);
             winL.enabled = true;
             winL.text= "You have been defeated";
         }
