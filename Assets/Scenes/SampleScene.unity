@@ -787,7 +787,7 @@ GameObject:
   m_IsActive: 1
 --- !u!95 &1464102890
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -804,7 +804,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!212 &1464102891
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -885,6 +885,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drawA: {fileID: 1811950235}
+  gunFire: {fileID: 8300000, guid: 375ae74338e071c4a8716e340b4767c7, type: 3}
 --- !u!1 &1584292652
 GameObject:
   m_ObjectHideFlags: 0
@@ -5822,7 +5823,7 @@ GameObject:
   m_IsActive: 1
 --- !u!95 &1811950234
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5839,7 +5840,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!212 &1811950235
 SpriteRenderer:
   m_ObjectHideFlags: 0

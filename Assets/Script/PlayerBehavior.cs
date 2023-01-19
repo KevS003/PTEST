@@ -22,7 +22,8 @@ public class PlayerBehavior : MonoBehaviour
 
     float totalTime = 10;
     float introTime = 2;
-    int winOrLos = 0;
+    int winOrLos = -1;
+    bool fireOpen;
     private SpriteRenderer drawR;
 
     Animator anim;
@@ -34,6 +35,7 @@ public class PlayerBehavior : MonoBehaviour
         timer.enabled = false;
         winL.enabled = false;
         anim.enabled= false;
+        fireOpen = false;
 
     }
 
@@ -51,36 +53,45 @@ public class PlayerBehavior : MonoBehaviour
             start.enabled = false;
             timer.enabled = true;
             anim.enabled = true;
+            fireOpen = true;
             
         }
-
-        if(timer.enabled == true )
+        if(fireOpen==true)
         {
-            if(totalTime>=0)
+            if(timer.enabled == true )
             {
-                timer.text = "Timer: " + totalTime.ToString("f0");
-                totalTime -= Time.deltaTime;
+                if(totalTime>=0 && winOrLos==-1)
+                {
+                    timer.text = "Timer till death: " + totalTime.ToString("f0");
+                    totalTime -= Time.deltaTime;
+                }
+                else if(totalTime <=0)
+                {
+                    anim.SetInteger("Win", -1);
+                    winOrLos = 0;
+                    WinLM(winOrLos);
+                }
             }
-            else if(totalTime <=0)
+        //Loss Condition here as an else statement
+            if(drawR.sprite.name == "Western_7" && Input.GetKeyDown(KeyCode.W))
+            {
+                anim.SetInteger("Win", 1);
+                winOrLos = 1;
+                WinLM(winOrLos);
+            }
+            else if(drawR.sprite.name == "Western_6" && Input.GetKeyDown(KeyCode.W))
             {
                 anim.SetInteger("Win", -1);
+                winOrLos = 0;
+                WinLM(winOrLos);
+            }
+            if(Input.GetKeyDown(KeyCode.Escape))
+            {
+                Application.Quit();       
             }
         }
-        //Loss Condition here as an else statement
-        if(drawR.sprite.name == "Western_7" && Input.GetKeyDown(KeyCode.W))
-        {
-            anim.SetInteger("Win", 1);
-        }
-        else if(drawR.sprite.name == "Western_6" && Input.GetKeyDown(KeyCode.W))
-        {
-            anim.SetInteger("Win", -1);
-        }
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();       
-        }
     }
-    public void  Garden (int winOrLos)
+    public void  WinLM (int winOrLos)
     {
         if( winOrLos==1)
         {
