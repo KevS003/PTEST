@@ -28,6 +28,8 @@ public class PlayerBehavior : MonoBehaviour
     int winOrLos = -1;
     bool fireOpen;
     bool timerDone = true;
+    bool soundDone = false;
+    bool timeL = false;
     private SpriteRenderer drawR;
 
     Animator anim;
@@ -53,7 +55,11 @@ public class PlayerBehavior : MonoBehaviour
         if(introTime>=0)
         {
             introTime -= Time.deltaTime; 
-            playerEffects.PlayOneShot(intro);
+            if(soundDone ==false)
+            {
+                playerEffects.PlayOneShot(intro);
+                soundDone = true;
+            }
         }
         else if(introTime <=0)
         {
@@ -77,9 +83,11 @@ public class PlayerBehavior : MonoBehaviour
                     timer.text = "Timer till death: " + totalTime.ToString("f0");
                     totalTime -= Time.deltaTime;
                 }
-                else if(totalTime <=0)
+                else if(totalTime <=0 && timeL == false)
                 {
-                    //playerEffects.volume = 1;
+                    //Debug.Log("HERE WATCH YOUR EARS");
+                    timeL = true;
+                    playerEffects.volume = .5f;
                     playerEffects.PlayOneShot(gunFireL);
                     anim.SetInteger("Win", -1);
                     winOrLos = 0;
@@ -89,7 +97,7 @@ public class PlayerBehavior : MonoBehaviour
         //Loss Condition here as an else statement
             if(drawR.sprite.name == "Western_7" && Input.GetKeyDown(KeyCode.W))
             {
-                playerEffects.volume = 1;
+                playerEffects.volume = .5f;
                 playerEffects.PlayOneShot(gunFire);
                 anim.SetInteger("Win", 1);
                 winOrLos = 1;
@@ -97,7 +105,7 @@ public class PlayerBehavior : MonoBehaviour
             }
             else if(drawR.sprite.name == "Western_6" && Input.GetKeyDown(KeyCode.W))
             {
-                playerEffects.volume = 1;
+                playerEffects.volume = .5f;
                 playerEffects.PlayOneShot(gunFireL);
                 anim.SetInteger("Win", -1);
                 winOrLos = 0;
