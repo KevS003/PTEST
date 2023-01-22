@@ -95,7 +95,7 @@ public class PlayerBehavior : MonoBehaviour
                 }
             }
         //Loss Condition here as an else statement
-            if(drawR.sprite.name == "Western_7" && Input.GetKeyDown(KeyCode.W))
+            if(drawR.sprite.name == "Western_7" && Input.GetKeyDown(KeyCode.W) && winOrLos==-1)
             {
                 playerEffects.volume = .5f;
                 playerEffects.PlayOneShot(gunFire);
@@ -103,7 +103,7 @@ public class PlayerBehavior : MonoBehaviour
                 winOrLos = 1;
                 WinLM(winOrLos);
             }
-            else if(drawR.sprite.name == "Western_6" && Input.GetKeyDown(KeyCode.W))
+            else if(drawR.sprite.name == "Western_6" && Input.GetKeyDown(KeyCode.W) && winOrLos ==-1)
             {
                 playerEffects.volume = .5f;
                 playerEffects.PlayOneShot(gunFireL);
